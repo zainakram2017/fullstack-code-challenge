@@ -1,41 +1,6 @@
 # Limbic Fullstack Code Challenge
 
-
-
 This is Limbic’s FullStack Challenge that combines bits from the frontend and backend challenges in one.
-
-
-
-## Instructions
-
-1. **Submitting Code**
-
-   **Option A:**
-
-   - Fork this repo
-   - Issue a Pull Request on the repo when you're ready to start. This will count as your starting date.
-   - For the frontend, setup your development environment for React or React Native in a **frontend** folder
-   - For the backend, setup your development environment for NodeJS with ExpressJS in a **backend** folder
-   - Implement your solution on each end
-   - Commit your changes into the forked repo
-
-   **Option B:**
-
-   - For the frontend, setup your development environment for React or React Native in a **frontend** folder
-   - For the backend, setup your development environment for NodeJS with ExpressJS in a **backend** folder
-   - Implement your solution for each end
-   - Archive the **frontend** and **backend** folders into a zip file
-   - Send us the zip file. We should be able to extract the content of each folder and run it from there (w/o node_modules)
-
-2. **Deadline:**
-
-   You have 1 week to complete as much tasks as you can from the challenge below. Countdown starts from date you issued the PR or from the date you were invited to complete this challenge via email
-
-3. **Implementation:**
-
-   There is no correct way to do the challenge, you are free to add whatever libraries you like besides the ones mentioned below. We want to see what you come up with on your own.
-
-## The Challenge
 
 Jane is a clinical therapist and wants her clients to answer simple questionnaires in order to better understand them. She needs a way to add/delete/edit questions and also see the answers of each client.
 
@@ -96,3 +61,33 @@ You are tasked with writing a React/React Native app to consume the backend API.
 🏆 **BIG PLUS:**
 
 You can use anything you want for state management. We use MobX and the Context API a lot so it's a big plus if you can also **implement some/all of the state handling with MobX and Context API**.
+
+
+## Instructions
+
+1. **Submitting Code**
+
+   **Option A:**
+
+   - Fork this repo
+   - Issue a Pull Request on the repo when you're ready to start. This will count as your starting date.
+   - For the frontend, setup your development environment for React or React Native in a **frontend** folder
+   - For the backend, setup your development environment for NodeJS with ExpressJS in a **backend** folder
+   - Implement your solution on each end
+   - Commit your changes into the forked repo
+
+   **Option B:**
+
+   - For the frontend, setup your development environment for React or React Native in a **frontend** folder
+   - For the backend, setup your development environment for NodeJS with ExpressJS in a **backend** folder
+   - Implement your solution for each end
+   - Archive the **frontend** and **backend** folders into a zip file
+   - Send us the zip file. We should be able to extract the content of each folder and run it from there (w/o node_modules)
+
+2. **Deadline:**
+
+   You have 1 week to complete as much tasks as you can from the challenge below. Countdown starts from date you issued the PR or from the date you were invited to complete this challenge via email
+
+3. **Implementation:**
+
+   There is no correct way to do the challenge, you are free to add whatever libraries you like besides the ones mentioned below. We want to see what you come up with on your own.
