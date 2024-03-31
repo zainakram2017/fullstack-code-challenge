@@ -1,5 +1,7 @@
+import { UserList } from "../components";
+
 const HomePage = () => {
-  return <div>Home</div>;
+  return <UserList />;
 };
 
 export default HomePage;

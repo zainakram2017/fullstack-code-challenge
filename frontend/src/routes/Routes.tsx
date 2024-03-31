@@ -1,9 +1,18 @@
-import { BrowserRouter, Navigate, Route, Routes as RouterRoutes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes as RouterRoutes,
+} from "react-router-dom";
+
 import { useAuth } from "../contexts/AuthContext";
+
 import HomePage from "../pages/HomePage";
-import ProtectedRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPageRoute from "./LoginPageRoute";
+import QuestionsPage from "../pages/QuestionsPage";
+import QuestionPage from "../pages/QuestionPage";
 
 const Routes = () => {
   const { isLoading } = useAuth();
@@ -15,9 +24,11 @@ const Routes = () => {
         <BrowserRouter>
           <RouterRoutes>
             <Route path="/login" element={<LoginPageRoute />} />
-            <Route path="/" element={<ProtectedRoute />}>
+            <Route path="/" element={<PrivateRoute />}>
               <Route index element={<Navigate to="/home" />} />
               <Route path="home" element={<HomePage />} />
+              <Route path="questions" element={<QuestionsPage />} />
+              <Route path="questions/new" element={<QuestionPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </RouterRoutes>
