@@ -12,7 +12,6 @@ import PrivateRoute from "./PrivateRoute";
 import NotFoundPage from "../pages/NotFoundPage";
 import LoginPageRoute from "./LoginPageRoute";
 import QuestionsPage from "../pages/QuestionsPage";
-import QuestionPage from "../pages/QuestionPage";
 
 const Routes = () => {
   const { isLoading } = useAuth();
@@ -28,7 +27,6 @@ const Routes = () => {
               <Route index element={<Navigate to="/home" />} />
               <Route path="home" element={<HomePage />} />
               <Route path="questions" element={<QuestionsPage />} />
-              <Route path="questions/new" element={<QuestionPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </RouterRoutes>
