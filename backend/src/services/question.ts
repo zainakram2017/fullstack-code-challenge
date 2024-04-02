@@ -36,6 +36,7 @@ export const createQuestionHandler = async (req: RequestObject, res: Response, n
 export const readQuestionHandler = async (req: RequestObject, res: Response, next: NextFunction) => {
     try {
         const { uuid } = req.params;
+        const withAnswers = req.query.withAnswers === 'true';
         const question = await prisma.question.findUnique({
             where: {
                 uuid
@@ -46,16 +47,32 @@ export const readQuestionHandler = async (req: RequestObject, res: Response, nex
                         uuid: true,
                         name: true
                     }
-                }
+                },
+                answers: withAnswers
+                    ? {
+                        include: {
+                            user: {
+                                select: {
+                                    uuid: true,
+                                    name: true
+                                }
+                            }
+                        }
+                    }
+                    : false
             }
         });
 
-        if(question) {
-            return res.status(200).json(question);
+        if (question) {
+            if (withAnswers) {
+                return res.status(200).json({ ...question, totalAnswers: question.answers.length });
+            } else {
+                return res.status(200).json(question);
+            }
         } else {
             return res.status(404).json({ message: 'Question not found' });
         }
-    } catch(error: any) {
+    } catch (error: any) {
         next(new HttpException(400, error?.message, error));
     }
 };

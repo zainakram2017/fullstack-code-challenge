@@ -54,7 +54,6 @@ export const mockLoginHandler = async (req: RequestObject, res: Response, next: 
                 role: true,
             }
         });
-        console.log(user);
         if (!user) {
             next(new HttpException(404, 'User not found', []));
         }
@@ -63,6 +62,36 @@ export const mockLoginHandler = async (req: RequestObject, res: Response, next: 
             'access_token': token,
             'token_type': 'Bearer',
         });
+    } catch (error: any) {
+        next(new HttpException(400, error?.message, error));
+    }
+};
+
+export const getUserHandler = async (req: RequestObject, res: Response, next: NextFunction) => {
+    try {
+        const { uuid } = req.params;
+        const { withQuestions } = req.query;
+        const user = await prisma.user.findUnique({
+            where: {
+                uuid,
+            },
+            include: {
+                questions: withQuestions === 'true',
+            },
+        });
+
+        if (user) {
+            let responseData: any = { ...user };
+            if (withQuestions === 'true') {
+                responseData = {
+                    ...responseData,
+                    totalQuestions: user.questions.length,
+                };
+            }
+            return res.status(200).json(responseData);
+        } else {
+            return res.status(404).json({ message: 'User not found' });
+        }
     } catch (error: any) {
         next(new HttpException(400, error?.message, error));
     }

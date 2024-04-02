@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { UserRoleEnum, type Route } from '../utils/types/index';
-import { signUp, getAllUsers, mockLogin } from '../controllers/user';
+import { signUp, getAllUsers, mockLogin, getUser } from '../controllers/user';
 import { isAuthenticated, isAuthorized } from '../middlewares';
 
 const router = Router();
@@ -16,7 +16,7 @@ const userRoute: Route[] = [
     {
         method: 'post',
         route: '/',
-        middlewares: [isAuthenticated, isAuthorized([UserRoleEnum.ADMIN])],
+        middlewares: [],
         controller: signUp
     },
     {
@@ -24,6 +24,12 @@ const userRoute: Route[] = [
         route: '/mock_login',
         middlewares: [],
         controller: mockLogin
+    },
+    {
+        method: 'get',
+        route: '/:uuid',
+        middlewares: [isAuthenticated, isAuthorized([UserRoleEnum.ADMIN, UserRoleEnum.CLIENT])],
+        controller: getUser
     }
 ];
 

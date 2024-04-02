@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as yup from 'yup';
 
-import { signUpHandler, getAllUsersHandler, mockLoginHandler } from '../services/user';
+import { signUpHandler, getAllUsersHandler, mockLoginHandler, getUserHandler } from '../services/user';
 import { validateRequest } from '../utils/validators';
 import { HttpException } from '../utils/exceptions/http';
 import { UserRoleEnum } from '../utils/types';
@@ -33,6 +33,18 @@ export const mockLogin = async (req: Request, res: Response, next: NextFunction)
 
     if(isValid) {
         mockLoginHandler(req, res, next);
+    } else {
+        next(new HttpException(error.status, error.message, error.data));
+    }
+};
+
+export const getUser = async (req: Request, res: Response, next: NextFunction) => {
+    const { isValid, error } = await validateRequest(req.params, {
+        uuid: yup.string().required(),
+    });
+
+    if(isValid) {
+        getUserHandler(req, res, next);
     } else {
         next(new HttpException(error.status, error.message, error.data));
     }
