@@ -1,10 +1,28 @@
 import { Router } from 'express';
 
-const userRouter = Router();
+import { type Route } from '../utils/types/index';
+import { signUp, getAllUsers } from '../controllers/user';
 
-userRouter.get('/users', (req, res) => {
-    res.json({ message: 'GET /users' });
+const router = Router();
+
+const userRoute: Route[] = [
+    {
+        method: 'get',
+        route: '/',
+        middlewares: [],
+        controller: getAllUsers
+    },
+    {
+        method: 'post',
+        route: '/',
+        middlewares: [],
+        controller: signUp
+    }
+];
+
+userRoute.forEach(route => {
+    router[route.method](route.route, route.middlewares, route.controller);
 });
 
-export { userRouter };
+export { router as userRoutes};
 
