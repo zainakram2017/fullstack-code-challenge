@@ -70,13 +70,14 @@ export const mockLoginHandler = async (req: RequestObject, res: Response, next: 
 export const getUserHandler = async (req: RequestObject, res: Response, next: NextFunction) => {
     try {
         const { uuid } = req.params;
-        const { withQuestions } = req.query;
+        const { withQuestions, withAnswers } = req.query;
         const user = await prisma.user.findUnique({
             where: {
                 uuid,
             },
             include: {
                 questions: withQuestions === 'true',
+                answers: withAnswers === 'true',
             },
         });
 
@@ -88,7 +89,13 @@ export const getUserHandler = async (req: RequestObject, res: Response, next: Ne
                     totalQuestions: user.questions.length,
                 };
             }
-            return res.status(200).json(responseData);
+            if (withAnswers === 'true') {
+                responseData = {
+                    ...responseData,
+                    totalAnswers: user.answers.length,
+                };
+            }
+            return res.status(200).json({responseData});
         } else {
             return res.status(404).json({ message: 'User not found' });
         }
