@@ -14,11 +14,34 @@ datasource db {
 }
 
 model User {
-  uuid      String   @id @default(uuid())
-  username  String   @unique
-  email     String   @unique
+  uuid      String     @id @default(uuid())
+  username  String     @unique
+  email     String     @unique
   name      String?
-  role      String   @default("patient")
+  role      String     @default("patient")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  questions Question[]
+  answers   Answer[]
+}
+
+model Question {
+  uuid      String   @id @default(uuid())
+  title     String
+  userId    String
+  user      User     @relation(fields: [userId], references: [uuid])
+  answers   Answer[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Answer {
+  uuid       String   @id @default(uuid())
+  content    String
+  userId     String
+  questionId String
+  user       User     @relation(fields: [userId], references: [uuid])
+  question   Question @relation(fields: [questionId], references: [uuid])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

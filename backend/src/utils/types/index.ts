@@ -18,14 +18,27 @@ export type DatabaseConfig = {
 export type Secret = {
     port: string;
     dbConfig: DatabaseConfig;
+    jwtConfig: {
+        JWT_SECRET: string;
+        JWT_EXPIRY: string;
+    }
 }
 
 export type RequestObject = Request & {
     currentUser?: {
-        id: string;
+        uuid: string;
         username: string;
         email: string;
+        role:  string;
     };
+}
+
+export type TokenPayload = {
+    uuid: string;
+    username: string;
+    email: string;
+    name: string;
+    role: string;
 }
 
 export enum UserRoleEnum {
