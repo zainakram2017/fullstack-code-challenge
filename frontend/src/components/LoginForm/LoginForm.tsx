@@ -9,7 +9,7 @@ const LoginForm = () => {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ username: "", password: "" }}
       validationSchema={validationSchema}
       onSubmit={(values, { setSubmitting }) => {
         login(values);
@@ -21,21 +21,21 @@ const LoginForm = () => {
         <Form className="space-y-6">
           <div>
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Email address
+              Username
             </label>
             <div className="mt-2">
               <Field
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
               <ErrorMessage
-                name="email"
+                name="username"
                 component="div"
                 className="text-red-500 text-sm mt-1"
               />
