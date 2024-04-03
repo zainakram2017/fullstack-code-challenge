@@ -6,6 +6,7 @@ import {
   getAllQuestions,
   updateQuestion,
 } from "../apiCalls";
+import { useAuth } from "./AuthContext";
 
 type QuestionContextProps = {
   questions: Question[];
@@ -28,6 +29,7 @@ const QuestionContext = createContext<QuestionContextProps>({
 export const QuestionProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
+  const { user } = useAuth();
   const [questions, setQuestions] = useState<Question[]>([]);
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(
     null
@@ -36,7 +38,12 @@ export const QuestionProvider: React.FC<{
   useEffect(() => {
     const fetchData = async () => {
       const questions = await getAllQuestions();
-      setQuestions(questions || []);
+      const dockerQuestions = questions?.filter(
+        (question) => question.userId === user?.uuid
+      );
+      setQuestions(
+        (user?.role === "client" ? dockerQuestions : questions) || []
+      );
     };
 
     fetchData();

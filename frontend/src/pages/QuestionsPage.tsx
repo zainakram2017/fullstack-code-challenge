@@ -1,4 +1,5 @@
 import { Modal, QuestionForm } from "../components";
+import { useAuth } from "../contexts/AuthContext";
 import { useQuestion } from "../contexts/QuestionContext";
 import { useModal } from "../hooks";
 
@@ -6,6 +7,7 @@ const QuestionsPage = () => {
   const { questions, removeQuestion, selectedQuestion, setSelectedQuestion } =
     useQuestion();
   const [isShowing, toggle] = useModal();
+  const { user } = useAuth();
 
   return (
     <div className="bg-white">
@@ -52,14 +54,16 @@ const QuestionsPage = () => {
                   >
                     Delete
                   </button>
-                  <button
-                    onClick={() => {
-                      /* Handle Answer */
-                    }}
-                    className="px-3 py-1 text-sm font-medium text-green-600 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
-                  >
-                    Answer
-                  </button>
+                  {user?.role === "patient" && (
+                    <button
+                      onClick={() => {
+                        /* Handle Answer */
+                      }}
+                      className="px-3 py-1 text-sm font-medium text-green-600 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
+                    >
+                      Answer
+                    </button>
+                  )}
                 </div>
               </div>
             ))}
