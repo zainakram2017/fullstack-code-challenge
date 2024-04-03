@@ -3,7 +3,7 @@ import { useQuestion } from "../contexts/QuestionContext";
 import { useModal } from "../hooks";
 
 const QuestionsPage = () => {
-  const { questions, deleteQuestion, selectedQuestion, setSelectedQuestion } =
+  const { questions, removeQuestion, selectedQuestion, setSelectedQuestion } =
     useQuestion();
   const [isShowing, toggle] = useModal();
 
@@ -32,9 +32,9 @@ const QuestionsPage = () => {
         <div className="mt-20">
           <dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:gap-x-10">
             {questions.map((question) => (
-              <div key={question.id}>
+              <div key={question.uuid}>
                 <dt className="text-base font-semibold leading-7 text-gray-900">
-                  {question.question}
+                  {question.title}
                 </dt>
                 <div className="flex mt-2">
                   <button
@@ -47,7 +47,7 @@ const QuestionsPage = () => {
                     Update
                   </button>
                   <button
-                    onClick={() => deleteQuestion(question.id)}
+                    onClick={() => removeQuestion(question.uuid)}
                     className="px-3 py-1 mr-2 text-sm font-medium text-red-600 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
                   >
                     Delete

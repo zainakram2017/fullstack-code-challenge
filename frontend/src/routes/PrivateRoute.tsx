@@ -8,13 +8,13 @@ import { UserProvider } from "../contexts/UserContext";
 const PrivateRoute: FC = () => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? (
-    <Layout>
-      <UserProvider>
-        <QuestionProvider>
+    <UserProvider>
+      <QuestionProvider>
+        <Layout>
           <Outlet />
-        </QuestionProvider>
-      </UserProvider>
-    </Layout>
+        </Layout>
+      </QuestionProvider>
+    </UserProvider>
   ) : (
     <Navigate to="/login" />
   );

@@ -10,11 +10,11 @@ type Props = {
 };
 
 const QuestionForm: React.FC<Props> = ({
-  initialValues = { question: "", id: "" },
+  initialValues = { title: "", uuid: "" },
   afterSubmit = () => {},
 }) => {
   const { editQuestion, addQuestion } = useQuestion();
-  const isEditMode = !!initialValues.question && !!initialValues.id;
+  const isEditMode = !!initialValues.title && !!initialValues.uuid;
 
   const buttonLabel = (isSubmitting: boolean) => {
     if (isEditMode) {
@@ -27,14 +27,16 @@ const QuestionForm: React.FC<Props> = ({
   return (
     <>
       <Formik
-        initialValues={initialValues}
+        initialValues={{
+          question: initialValues.title,
+          uuid: initialValues.uuid,
+        }}
         validationSchema={questionValidationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          debugger;
+        onSubmit={async (values, { setSubmitting }) => {
           if (isEditMode) {
-            editQuestion(initialValues.id, values.question);
+            editQuestion(initialValues.uuid, values.question);
           } else {
-            addQuestion(values.question);
+            await addQuestion(values.question);
           }
           setSubmitting(false);
           afterSubmit();

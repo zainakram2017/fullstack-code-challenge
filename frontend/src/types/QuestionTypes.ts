@@ -1,4 +1,7 @@
 export type Question = {
-  id: string;
-  question: string;
+  uuid: string;
+  title: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
 };
