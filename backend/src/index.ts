@@ -1,12 +1,13 @@
 import express, { urlencoded, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-
-import secrets from '../secrets';
-import { appRouter as appRoutes } from './routes';
+import cors from "cors";
+import secrets from "../secrets";
+import { appRouter as appRoutes } from "./routes";
 
 const app = express();
 const prisma = new PrismaClient();
 
+app.use(cors());
 app.use(express.json());
 app.use(urlencoded({ extended: false }));
 

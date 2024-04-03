@@ -59,6 +59,7 @@ export const mockLoginHandler = async (req: RequestObject, res: Response, next: 
         }
         const token = generateToken(user as TokenPayload);
         return res.status(200).json({
+            user: user,
             'access_token': token,
             'token_type': 'Bearer',
         });
