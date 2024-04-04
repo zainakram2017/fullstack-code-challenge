@@ -1,10 +1,9 @@
 import { execSync } from 'child_process';
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function checkAndSeed() {
+const checkAndSeed = async () => {
     try {
         const users = await prisma.user.findMany();
         if (users.length === 0) {
@@ -20,14 +19,14 @@ async function checkAndSeed() {
     } finally {
         await prisma.$disconnect();
     }
-}
+};
 
-async function migrateAndSeed() {
+const migrateAndSeed = async () => {
     execSync('npx prisma migrate deploy', { stdio: 'inherit' });
     await seed();
-}
+};
 
-async function seed() {
+const seed = async () => {
     const createdUsers = [];
 
     for (let i = 1; i <= 3; i++) {
@@ -51,7 +50,6 @@ async function seed() {
                 },
             });
 
-            // Other users answer each question
             for (const answeringUser of createdUsers.filter(u => u.uuid !== user.uuid)) {
                 await prisma.answer.create({
                     data: {
@@ -65,6 +63,6 @@ async function seed() {
     }
 
     console.log('Seeding completed.');
-}
+};
 
 checkAndSeed();

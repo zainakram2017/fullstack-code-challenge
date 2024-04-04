@@ -1,8 +1,8 @@
 import express, { urlencoded, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import cors from "cors";
-import secrets from "../secrets";
-import { appRouter as appRoutes } from "./routes";
+import cors from 'cors';
+import secrets from '../secrets';
+import { appRouter as appRoutes } from './routes';
 
 const app = express();
 const prisma = new PrismaClient();

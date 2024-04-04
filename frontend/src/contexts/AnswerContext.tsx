@@ -76,7 +76,7 @@ export const AnswerProvider: React.FC<{
     }
   };
 
-  const removeAnswer = async (id: string) => {
+  const removeAnswer = async () => {
     // const isDeleted = await deleteAnswer(id);
     // if (isDeleted)
     //   setAnswers(questions.filter((question) => question.uuid !== id));

@@ -16,7 +16,6 @@ export const createAnswer = async (
   questionId: string
 ): Promise<Answer | null> => {
   try {
-    debugger;
     const res = await axios.post(`/answer`, {
       content: questionTitle,
       questionId: questionId,
