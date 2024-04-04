@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { User } from "../types";
+import { getAllUsers } from "../apiCalls";
 
 type UserContextProps = {
   users: User[];
@@ -21,11 +22,8 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      const data = await response.json();
-      setUsers(data);
+      const users = await getAllUsers();
+      setUsers(users || []);
     };
 
     fetchData();
