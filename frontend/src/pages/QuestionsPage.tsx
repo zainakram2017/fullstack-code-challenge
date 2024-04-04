@@ -1,4 +1,5 @@
-import { Modal, QuestionForm } from "../components";
+import { AnswerForm, Modal, QuestionForm } from "../components";
+import { useAnswer } from "../contexts/AnswerContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useQuestion } from "../contexts/QuestionContext";
 import { useModal } from "../hooks";
@@ -6,19 +7,33 @@ import { useModal } from "../hooks";
 const QuestionsPage = () => {
   const { questions, removeQuestion, selectedQuestion, setSelectedQuestion } =
     useQuestion();
-  const [isShowing, toggle] = useModal();
+  const { getAnswer, setSelectedAnswer, selectedAnswer } = useAnswer();
+  const { isShowing: isShowingQuestionModal, toggle: toggleQuestionModal } =
+    useModal();
+  const { isShowing: isShowingAnswerModal, toggle: toggleAnswerModal } =
+    useModal();
   const { user } = useAuth();
 
   return (
     <div className="bg-white">
       <Modal
-        show={isShowing}
-        onCloseButtonClick={toggle}
+        show={isShowingAnswerModal}
+        onCloseButtonClick={toggleAnswerModal}
+        title="Answer"
+      >
+        <AnswerForm
+          initialValues={selectedAnswer || undefined}
+          afterSubmit={toggleAnswerModal}
+        />
+      </Modal>
+      <Modal
+        show={isShowingQuestionModal}
+        onCloseButtonClick={toggleQuestionModal}
         title="Update Question"
       >
         <QuestionForm
           initialValues={selectedQuestion || undefined}
-          afterSubmit={toggle}
+          afterSubmit={toggleQuestionModal}
         />
       </Modal>
       <div className="mx-auto max-w-7xl px-6 py-16 sm:py-24 lg:px-8">
@@ -39,25 +54,32 @@ const QuestionsPage = () => {
                   {question.title}
                 </dt>
                 <div className="flex mt-2">
-                  <button
-                    onClick={() => {
-                      setSelectedQuestion(question);
-                      toggle();
-                    }}
-                    className="px-3 py-1 mr-2 text-sm font-medium text-indigo-600 bg-indigo-100 rounded-md hover:bg-indigo-200 focus:outline-none focus:bg-indigo-200"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => removeQuestion(question.uuid)}
-                    className="px-3 py-1 mr-2 text-sm font-medium text-red-600 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
-                  >
-                    Delete
-                  </button>
+                  {user?.role !== "patient" && (
+                    <>
+                      <button
+                        onClick={() => {
+                          setSelectedQuestion(question);
+                          toggleQuestionModal();
+                        }}
+                        className="px-3 py-1 mr-2 text-sm font-medium text-indigo-600 bg-indigo-100 rounded-md hover:bg-indigo-200 focus:outline-none focus:bg-indigo-200"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => removeQuestion(question.uuid)}
+                        className="px-3 py-1 mr-2 text-sm font-medium text-red-600 bg-red-100 rounded-md hover:bg-red-200 focus:outline-none focus:bg-red-200"
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
                   {user?.role === "patient" && (
                     <button
                       onClick={() => {
-                        /* Handle Answer */
+                        toggleAnswerModal();
+                        const answer = getAnswer(question.uuid);
+                        setSelectedQuestion(question);
+                        setSelectedAnswer(answer);
                       }}
                       className="px-3 py-1 text-sm font-medium text-green-600 bg-green-100 rounded-md hover:bg-green-200 focus:outline-none focus:bg-green-200"
                     >

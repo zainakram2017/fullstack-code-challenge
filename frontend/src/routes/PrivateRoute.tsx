@@ -4,15 +4,18 @@ import { useAuth } from "../contexts/AuthContext";
 import { Layout } from "../components";
 import { QuestionProvider } from "../contexts/QuestionContext";
 import { UserProvider } from "../contexts/UserContext";
+import { AnswerProvider } from "../contexts/AnswerContext";
 
 const PrivateRoute: FC = () => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? (
     <UserProvider>
       <QuestionProvider>
-        <Layout>
-          <Outlet />
-        </Layout>
+        <AnswerProvider>
+          <Layout>
+            <Outlet />
+          </Layout>
+        </AnswerProvider>
       </QuestionProvider>
     </UserProvider>
   ) : (

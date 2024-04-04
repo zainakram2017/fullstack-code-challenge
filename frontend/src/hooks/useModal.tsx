@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-type UseModalReturnType = [boolean, () => void];
+type UseModalReturnType = { isShowing: boolean; toggle: () => void };
 
 export const useModal = (): UseModalReturnType => {
   const [isShowing, setIsShowing] = useState<boolean>(false);
@@ -9,5 +9,5 @@ export const useModal = (): UseModalReturnType => {
     setIsShowing((prevState) => !prevState);
   };
 
-  return [isShowing, toggle];
+  return { isShowing, toggle };
 };

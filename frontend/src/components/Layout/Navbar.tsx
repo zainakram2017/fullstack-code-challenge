@@ -12,9 +12,9 @@ import Modal from "../Modals/Modal";
 import QuestionForm from "../QuestionForm/QuestionForm";
 
 const Navbar = () => {
-  const [isShowing, toggle] = useModal();
+  const { isShowing, toggle } = useModal();
 
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const location = useLocation();
   const menuItems = [
     {
@@ -86,18 +86,20 @@ const Navbar = () => {
                   </div>
                 </div>
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <span
-                      onClick={toggle}
-                      className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
-                    >
-                      <PlusIcon
-                        className="-ml-0.5 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                      New Question
-                    </span>
-                  </div>
+                  {user?.role !== "patient" && (
+                    <div className="flex-shrink-0">
+                      <span
+                        onClick={toggle}
+                        className="relative inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer"
+                      >
+                        <PlusIcon
+                          className="-ml-0.5 h-5 w-5"
+                          aria-hidden="true"
+                        />
+                        New Question
+                      </span>
+                    </div>
+                  )}
                   <div className="hidden md:ml-4 md:flex md:flex-shrink-0 md:items-center">
                     <ProfileDropdown
                       avatarSrc="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
